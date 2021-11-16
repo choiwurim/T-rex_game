@@ -1,10 +1,8 @@
 '''
 Function:
-    仿谷歌浏览器小恐龙游戏
+    크롬 공룡 게임
 Author:
     Charles
-微信公众号:
-    Charles的皮卡丘
 '''
 import cfg
 import sys
@@ -15,17 +13,17 @@ from modules import *
 
 '''main'''
 def main(highest_score):
-    # 游戏初始化
+    # 게임초기화
     pygame.init()
     screen = pygame.display.set_mode(cfg.SCREENSIZE)
-    pygame.display.set_caption('T-Rex Rush')
-    # 导入所有声音文件
+    pygame.display.set_caption('T-Rex Rush —— Charles的皮卡丘')
+    #모든 소리파일 가져오기
     sounds = {}
     for key, value in cfg.AUDIO_PATHS.items():
         sounds[key] = pygame.mixer.Sound(value)
-    # 游戏开始界面
+    # 게임 시작화면
     GameStartInterface(screen, sounds, cfg)
-    # 定义一些游戏中必要的元素和变量
+    # 게임에 필요한 요소와 변수들 정의
     score = 0
     score_board = Scoreboard(cfg.IMAGE_PATHS['numbers'], position=(534, 15), bg_color=cfg.BACKGROUND_COLOR)
     highest_score = highest_score
@@ -37,7 +35,7 @@ def main(highest_score):
     ptera_sprites_group = pygame.sprite.Group()
     add_obstacle_timer = 0
     score_timer = 0
-    # 游戏主循环
+    # 게임 루프
     clock = pygame.time.Clock()
     while True:
         for event in pygame.event.get():
@@ -52,10 +50,10 @@ def main(highest_score):
             elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
                 dino.unduck()
         screen.fill(cfg.BACKGROUND_COLOR)
-        # --随机添加云
+        # --무작위 구름 추가
         if len(cloud_sprites_group) < 5 and random.randrange(0, 300) == 10:
             cloud_sprites_group.add(Cloud(cfg.IMAGE_PATHS['cloud'], position=(cfg.SCREENSIZE[0], random.randrange(30, 75))))
-        # --随机添加仙人掌/飞龙
+        # --선인장/익룡 무작위 추가
         add_obstacle_timer += 1
         if add_obstacle_timer > random.randrange(50, 150):
             add_obstacle_timer = 0
@@ -65,7 +63,7 @@ def main(highest_score):
             else:
                 position_ys = [cfg.SCREENSIZE[1]*0.82, cfg.SCREENSIZE[1]*0.75, cfg.SCREENSIZE[1]*0.60, cfg.SCREENSIZE[1]*0.20]
                 ptera_sprites_group.add(Ptera(cfg.IMAGE_PATHS['ptera'], position=(600, random.choice(position_ys))))
-        # --更新游戏元素
+        # --게임 요소 업데이트
         dino.update()
         ground.update()
         cloud_sprites_group.update()
@@ -88,14 +86,14 @@ def main(highest_score):
                     item.speed -= 1
                 for item in ptera_sprites_group:
                     item.speed -= 1
-        # --碰撞检测
+        # --충돌 체크
         for item in cactus_sprites_group:
             if pygame.sprite.collide_mask(dino, item):
                 dino.die(sounds)
         for item in ptera_sprites_group:
             if pygame.sprite.collide_mask(dino, item):
                 dino.die(sounds)
-        # --将游戏元素画到屏幕上
+        # --게임 요소 화면에 그리기
         dino.draw(screen)
         ground.draw(screen)
         cloud_sprites_group.draw(screen)
@@ -105,17 +103,17 @@ def main(highest_score):
         highest_score_board.set(highest_score)
         score_board.draw(screen)
         highest_score_board.draw(screen)
-        # --更新屏幕
+        # --화면 업데이트
         pygame.display.update()
         clock.tick(cfg.FPS)
-        # --游戏是否结束
+        # --게임 종료 여부 체크
         if dino.is_dead:
             break
-    # 游戏结束界面
+    # 게임 종료 인터페이스
     return GameEndInterface(screen, cfg), highest_score
 
 
-'''run'''
+#최종 실행
 if __name__ == '__main__':
     highest_score = 0
     while True:
