@@ -27,7 +27,7 @@ class Cactus(pygame.sprite.Sprite):
         self.rect.left, self.rect.bottom = position
         self.mask = pygame.mask.from_surface(self.image)
         # 定义一些必要的变量
-        self.speed = -10
+        self.speed = -9
     '''画到屏幕上'''
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -53,7 +53,7 @@ class Ptera(pygame.sprite.Sprite):
         self.rect.left, self.rect.centery = position
         self.mask = pygame.mask.from_surface(self.image)
         # 定义一些必要的变量
-        self.speed = -10
+        self.speed = -9
         self.refresh_rate = 10
         self.refresh_counter = 0
     '''画到屏幕上'''
